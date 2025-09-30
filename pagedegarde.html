@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEFT : Plateforme web de valorisation des travaux de recherche du LGP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .slide {
+            /* width: 1280px; */
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 2;
+            width: 100%;
+            max-width: 900px;
+        }
+        .title {
+            color: #004159;
+            font-size: 60px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .subtitle {
+            color: #5EDAD1;
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+        .author {
+            color: #6665DD;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 60px;
+        }
+        .logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            margin-top: 20px;
+        }
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo {
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        .logo-name {
+            font-size: 16px;
+            color: #004159;
+            font-weight: 600;
+        }
+        .accent-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        .accent-1 {
+            width: 400px;
+            height: 400px;
+            background-color: #5EDAD1;
+            top: -100px;
+            left: -100px;
+        }
+        .accent-2 {
+            width: 300px;
+            height: 300px;
+            background-color: #F5D547;
+            bottom: -50px;
+            right: -50px;
+        }
+        .accent-3 {
+            width: 200px;
+            height: 200px;
+            background-color: #FF9BC2;
+            top: 100px;
+            right: 200px;
+        }
+        .info-label{
+            color: #6665DD;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="accent-shape accent-1"></div>
+        <div class="accent-shape accent-2"></div>
+        <div class="accent-shape accent-3"></div>
+        
+        <div class="content">
+            <h1 class="title">WEFT : Plateforme web de valorisation des travaux de recherche du LGP</h1>
+            <p class="subtitle">Projet de fin d'études pour l'obtention du diplôme d'ingénieur en Sciences et Technologies Appliquées</p>
+            <p class="info"><span class="info-label">Réalisé par:</span>Omar LENGLIZ </p>
+            <p class="info"><span class="info-label">Encadré par:</span> Dr Sana BEN ABDALLAH – ISAMM, Dr Sina Namaki Araghi – LGP/UTTOP, M Amine KAROUI – LGP/UTTOP</p>
+            <p class="info"><span class="info-label">Année Universitaire:</span> <span class="highlight">2024/2025</span></p>            
+            <div class="logos">
+                <div class="logo-container">
+                    <img src="https://sfile.chatglm.cn/images-ppt/718424cf6363.jpeg" alt="ISAMM Logo" class="logo">
+                    <span class="logo-name">ISAMM</span>
+                </div>
+                <div class="logo-container">
+                    <img src="https://sfile.chatglm.cn/images-ppt/e59123d2fffe.png" alt="LGP Logo" class="logo">
+                    <span class="logo-name">LGP</span>
+                </div>
+                <div class="logo-container">
+                    <img src="https://sfile.chatglm.cn/images-ppt/3704c093fac2.png" alt="UTTOP Logo" class="logo">
+                    <span class="logo-name">UTTOP</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

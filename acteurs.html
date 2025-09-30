@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 2: Spécification des besoins - Identification des acteurs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 70px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .header {
+            margin-bottom: 40px;
+        }
+        .title {
+            color: #004159;
+            font-size: 40px;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            display: inline-block;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #5EDAD1;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .actors-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+        .actor-card {
+            flex: 1 0 calc(33.333% - 20px);
+            min-width: 300px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 65, 89, 0.08);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .actor-card:hover {
+            transform: translateY(-5px);
+        }
+        .actor-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        .actor-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .actor-icon .material-icons {
+            font-size: 32px;
+            color: white;
+        }
+        .visitor .actor-icon {
+            background-color: #5EDAD1;
+        }
+        .user .actor-icon {
+            background-color: #004159;
+        }
+        .researcher .actor-icon {
+            background-color: #F5D547;
+        }
+        .admin .actor-icon {
+            background-color: #FF9BC2;
+        }
+        .superadmin .actor-icon {
+            background-color: #6665DD;
+        }
+        .actor-name {
+            font-size: 24px;
+            font-weight: 600;
+            color: #004159;
+        }
+        .actor-permissions {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+        .actor-permissions li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        .actor-permissions .material-icons {
+            font-size: 20px;
+            margin-right: 10px;
+            color: #5EDAD1;
+            flex-shrink: 0;
+        }
+        .highlight {
+            color: #6665DD;
+            font-weight: 600;
+        }
+        .actor-bg {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        .visitor .actor-bg {
+            background-color: #5EDAD1;
+        }
+        .user .actor-bg {
+            background-color: #004159;
+        }
+        .researcher .actor-bg {
+            background-color: #F5D547;
+        }
+        .admin .actor-bg {
+            background-color: #FF9BC2;
+        }
+        .superadmin .actor-bg {
+            background-color: #6665DD;
+        }
+        .interactions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .interaction-diagram {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 65, 89, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+        }
+        .interaction-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #004159;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .interaction-content {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            position: relative;
+        }
+        .interaction-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+        }
+        .interaction-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .interaction-icon .material-icons {
+            font-size: 28px;
+            color: white;
+        }
+        .interaction-label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #004159;
+            text-align: center;
+        }
+        .accent-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        .accent-1 {
+            width: 400px;
+            height: 400px;
+            background-color: #5EDAD1;
+            top: -100px;
+            right: -100px;
+        }
+        .accent-2 {
+            width: 300px;
+            height: 300px;
+            background-color: #F5D547;
+            bottom: -50px;
+            left: -50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="accent-shape accent-1"></div>
+        <div class="accent-shape accent-2"></div>
+        
+        <div class="header">
+            <h1 class="title">Chapitre 2: Spécification des besoins - Identification des acteurs</h1>
+        </div>
+        
+        <div class="content">
+            <div class="actors-container">
+                <div class="actor-card visitor">
+                    <div class="actor-bg"></div>
+                    <div class="actor-header">
+                        <div class="actor-icon">
+                            <i class="material-icons">person_outline</i>
+                        </div>
+                        <div class="actor-name">Visiteur</div>
+                    </div>
+                    <ul class="actor-permissions">
+                        <li><i class="material-icons">check_circle</i>Accès à la landing page</li>
+                        <li><i class="material-icons">check_circle</i>Consultation des <span class="highlight">informations publiques</span></li>
+                        <li><i class="material-icons">check_circle</i>Accès aux fonctionnalités de connexion</li>
+                    </ul>
+                </div>
+                
+                <div class="actor-card user">
+                    <div class="actor-bg"></div>
+                    <div class="actor-header">
+                        <div class="actor-icon">
+                            <i class="material-icons">person</i>
+                        </div>
+                        <div class="actor-name">Utilisateur</div>
+                    </div>
+                    <ul class="actor-permissions">
+                        <li><i class="material-icons">check_circle</i>Accès <span class="highlight">complet</span> aux publications</li>
+                        <li><i class="material-icons">check_circle</i>Accès aux ressources supplémentaires</li>
+                        <li><i class="material-icons">check_circle</i>Interaction avec certains contenus</li>
+                    </ul>
+                </div>
+                
+                <div class="actor-card researcher">
+                    <div class="actor-bg"></div>
+                    <div class="actor-header">
+                        <div class="actor-icon">
+                            <i class="material-icons">school</i>
+                        </div>
+                        <div class="actor-name">Chercheur</div>
+                    </div>
+                    <ul class="actor-permissions">
+                        <li><i class="material-icons">check_circle</i>Toutes les permissions de l'utilisateur</li>
+                        <li><i class="material-icons">check_circle</i><span class="highlight">Gestion</span> de ses publications</li>
+                        <li><i class="material-icons">check_circle</i>Soumission de nouveaux projets</li>
+                        <li><i class="material-icons">check_circle</i>Accès à un tableau de bord</li>
+                    </ul>
+                </div>
+                
+                <div class="actor-card admin">
+                    <div class="actor-bg"></div>
+                    <div class="actor-header">
+                        <div class="actor-icon">
+                            <i class="material-icons">admin_panel_settings</i>
+                        </div>
+                        <div class="actor-name">Administrateur</div>
+                    </div>
+                    <ul class="actor-permissions">
+                        <li><i class="material-icons">check_circle</i>Toutes les permissions du chercheur</li>
+                        <li><i class="material-icons">check_circle</i><span class="highlight">Modération</span> des publications</li>
+                        <li><i class="material-icons">check_circle</i>Gestion des utilisateurs</li>
+                        <li><i class="material-icons">check_circle</i>Supervision des statistiques</li>
+                    </ul>
+                </div>
+                
+                <div class="actor-card superadmin">
+                    <div class="actor-bg"></div>
+                    <div class="actor-header">
+                        <div class="actor-icon">
+                            <i class="material-icons">security</i>
+                        </div>
+                        <div class="actor-name">Super-Admin</div>
+                    </div>
+                    <ul class="actor-permissions">
+                        <li><i class="material-icons">check_circle</i>Toutes les permissions de l'admin</li>
+                        <li><i class="material-icons">check_circle</i><span class="highlight">Gestion</span> des comptes administrateurs</li>
+                        <li><i class="material-icons">check_circle</i>Configuration des paramètres globaux</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="interactions">
+                <div class="interaction-diagram">
+                    <div class="interaction-title">Interactions entre les acteurs</div>
+                    <div class="interaction-content">
+                        <div class="interaction-node">
+                            <div class="interaction-icon" style="background-color: #5EDAD1;">
+                                <i class="material-icons">person_outline</i>
+                            </div>
+                            <div class="interaction-label">Visiteur</div>
+                        </div>
+                        
+                        <div class="interaction-node">
+                            <div class="interaction-icon" style="background-color: #004159;">
+                                <i class="material-icons">person</i>
+                            </div>
+                            <div class="interaction-label">Utilisateur</div>
+                        </div>
+                        
+                        <div class="interaction-node">
+                            <div class="interaction-icon" style="background-color: #F5D547;">
+                                <i class="material-icons">school</i>
+                            </div>
+                            <div class="interaction-label">Chercheur</div>
+                        </div>
+                        
+                        <div class="interaction-node">
+                            <div class="interaction-icon" style="background-color: #FF9BC2;">
+                                <i class="material-icons">admin_panel_settings</i>
+                            </div>
+                            <div class="interaction-label">Admin</div>
+                        </div>
+                        
+                        <div class="interaction-node">
+                            <div class="interaction-icon" style="background-color: #6665DD;">
+                                <i class="material-icons">security</i>
+                            </div>
+                            <div class="interaction-label">Super-Admin</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

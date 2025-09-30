@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sommaire - WEFT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .slide {
+            /* width: 1280px; */
+            min-height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 70px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .header {
+            margin-bottom: 50px;
+        }
+        .title {
+            color: #004159;
+            font-size: 40px;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            display: inline-block;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #5EDAD1;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: center;
+        }
+        .chapters {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .chapter {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        .chapter:hover {
+            transform: translateX(10px);
+        }
+        .chapter-number {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            font-weight: 600;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .chapter-1 .chapter-number {
+            background-color: #004159;
+            color: white;
+        }
+        .chapter-2 .chapter-number {
+            background-color: #5EDAD1;
+            color: #004159;
+        }
+        .chapter-3 .chapter-number {
+            background-color: #F5D547;
+            color: #004159;
+        }
+        .chapter-4 .chapter-number {
+            background-color: #FF9BC2;
+            color: #004159;
+        }
+        .chapter-5 .chapter-number {
+            background-color: #6665DD;
+            color: white;
+        }
+        .chapter-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #004159;
+        }
+        .accent-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        .accent-1 {
+            width: 400px;
+            height: 400px;
+            background-color: #5EDAD1;
+            top: -100px;
+            right: -100px;
+        }
+        .accent-2 {
+            width: 300px;
+            height: 300px;
+            background-color: #F5D547;
+            bottom: -50px;
+            left: -50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="accent-shape accent-1"></div>
+        <div class="accent-shape accent-2"></div>
+        
+        <div class="header">
+            <h1 class="title">Sommaire</h1>
+        </div>
+        
+        <div class="content">
+            <div class="chapters">
+                <div class="chapter chapter-1">
+                    <div class="chapter-number">1</div>
+                    <div class="chapter-title">Cadre du projet</div>
+                </div>
+                
+                <div class="chapter chapter-2">
+                    <div class="chapter-number">2</div>
+                    <div class="chapter-title">Spécification des besoins</div>
+                </div>
+                
+                <div class="chapter chapter-3">
+                    <div class="chapter-number">3</div>
+                    <div class="chapter-title">Conception</div>
+                </div>
+                
+                <div class="chapter chapter-4">
+                    <div class="chapter-number">4</div>
+                    <div class="chapter-title">Réalisation</div>
+                </div>
+                
+                <div class="chapter chapter-5">
+                    <div class="chapter-number">5</div>
+                    <div class="chapter-title">Conclusion et perspectives</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

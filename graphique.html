@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 3: Conception - Conception graphique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.5/dist/gsap.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(90deg, #004159, #005a77);
+            padding: 1.5rem 4rem;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 65, 89, 0.15);
+        }
+        .title {
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            display: inline-block;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #5EDAD1;
+        }
+        .content {
+            padding: 2rem 4rem;
+            height: calc(100% - 84px);
+            display: flex;
+            flex-direction: column;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #004159;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .section-title i {
+            margin-right: 0.75rem;
+            color: #5EDAD1;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            flex-grow: 1;
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 65, 89, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(0, 65, 89, 0.1);
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #004159;
+            display: flex;
+            align-items: center;
+        }
+        .card-title i {
+            margin-right: 0.75rem;
+        }
+        .card-body {
+            padding: 1.5rem;
+        }
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .color-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: calc(20% - 0.8rem);
+        }
+        .color-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .color-circle:hover {
+            transform: scale(1.1);
+        }
+        .color-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #004159;
+            text-align: center;
+        }
+        .color-code {
+            font-size: 0.8rem;
+            color: #666;
+            text-align: center;
+        }
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .logo-display {
+            width: 180px;
+            height: 180px;
+            background-color: #004159;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            box-shadow: 0 8px 16px rgba(0, 65, 89, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .logo-display:hover {
+            transform: scale(1.05);
+        }
+        .logo-w {
+            font-size: 100px;
+            font-weight: 700;
+            color: white;
+            position: relative;
+        }
+        .logo-bars {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .logo-bar {
+            width: 80px;
+            height: 6px;
+            background-color: #5EDAD1;
+            border-radius: 3px;
+        }
+        .logo-meaning {
+            text-align: center;
+            max-width: 300px;
+        }
+        .logo-meaning h3 {
+            color: #004159;
+            font-size: 1.1rem;
+            margin: 0 0 0.75rem 0;
+        }
+        .logo-meaning ul {
+            margin: 0;
+            padding-left: 1.25rem;
+            text-align: left;
+        }
+        .logo-meaning li {
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-size: 0.95rem;
+        }
+        .interfaces-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .interfaces-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 1rem;
+            flex-grow: 1;
+        }
+        .interface-item {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 65, 89, 0.05);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .interface-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 65, 89, 0.1);
+        }
+        .interface-header {
+            padding: 0.75rem;
+            background-color: rgba(0, 65, 89, 0.05);
+            border-bottom: 1px solid rgba(0, 65, 89, 0.1);
+        }
+        .interface-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #004159;
+            text-align: center;
+        }
+        .interface-preview {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            background-color: white;
+        }
+        .interface-icon {
+            font-size: 2.5rem;
+            color: #5EDAD1;
+        }
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.02;
+            background-image: 
+                linear-gradient(45deg, #004159 25%, transparent 25%), 
+                linear-gradient(-45deg, #004159 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #004159 75%), 
+                linear-gradient(-45deg, transparent 75%, #004159 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+        .accent-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        .accent-1 {
+            width: 400px;
+            height: 400px;
+            background-color: #5EDAD1;
+            top: -100px;
+            right: -100px;
+        }
+        .accent-2 {
+            width: 300px;
+            height: 300px;
+            background-color: #F5D547;
+            bottom: -50px;
+            left: -50px;
+        }
+        .highlight {
+            color: #6665DD;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="animated-bg"></div>
+        <div class="accent-shape accent-1"></div>
+        <div class="accent-shape accent-2"></div>
+        
+        <div class="header">
+            <h1 class="title">Conception graphique</h1>
+        </div>
+        
+        <div class="content">
+            <div class="grid-container">
+                <div class="card" id="palette-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-palette text-teal-400"></i>
+                            Palette de couleurs
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="color-palette">
+                            <div class="color-item">
+                                <div class="color-circle" style="background-color: #004159;"></div>
+                                <div class="color-name">Bleu Nuit</div>
+                                <div class="color-code">#004159</div>
+                            </div>
+                            
+                            <div class="color-item">
+                                <div class="color-circle" style="background-color: #5EDAD1;"></div>
+                                <div class="color-name">Turquoise</div>
+                                <div class="color-code">#5EDAD1</div>
+                            </div>
+                            
+                            <div class="color-item">
+                                <div class="color-circle" style="background-color: #F5D547;"></div>
+                                <div class="color-name">Jaune</div>
+                                <div class="color-code">#F5D547</div>
+                            </div>
+                            
+                            <div class="color-item">
+                                <div class="color-circle" style="background-color: #FF9BC2;"></div>
+                                <div class="color-name">Rose</div>
+                                <div class="color-code">#FF9BC2</div>
+                            </div>
+                            
+                            <div class="color-item">
+                                <div class="color-circle" style="background-color: #6665DD;"></div>
+                                <div class="color-name">Violet</div>
+                                <div class="color-code">#6665DD</div>
+                            </div>
+                            
+                            <div class="color-item">
+                                <div class="color-circle" style="background-color: #000000;"></div>
+                                <div class="color-name">Noir</div>
+                                <div class="color-code">#000</div>
+                            </div>
+                            
+                            <div class="color-item">
+                                <div class="color-circle" style="background-color: #111111;"></div>
+                                <div class="color-name">Gris Foncé</div>
+                                <div class="color-code">#111</div>
+                            </div>
+                            
+                            <div class="color-item">
+                                <div class="color-circle" style="background-color: #E5E7EB;"></div>
+                                <div class="color-name">Gris Clair</div>
+                                <div class="color-code">#E5E7EB</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" id="logo-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-trademark text-teal-400"></i>
+                            Logo WEFT
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="logo-container">
+                            <div class="logo-display">
+                                <div class="logo-w">W</div>
+                                <div class="logo-bars">
+                                    <div class="logo-bar"></div>
+                                    <div class="logo-bar"></div>
+                                    <div class="logo-bar"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="logo-meaning">
+                                <h3>Signification</h3>
+                                <ul>
+                                    <li>Lettre <span class="highlight">"W"</span> : onde/signal</li>
+                                    <li>Barres : <span class="highlight">structuration</span> de l'info</li>
+                                    <li>Ensemble : flux de données <span class="highlight">interconnectées</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" id="interfaces-card" style="grid-column: span 2;">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <i class="fas fa-desktop text-teal-400"></i>
+                            Interfaces Figma
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="interfaces-container">
+                            <div class="interfaces-grid">
+                                <div class="interface-item">
+                                    <div class="interface-header">
+                                        <div class="interface-title">Landing Page</div>
+                                    </div>
+                                    <div class="interface-preview">
+                                        <i class="fas fa-home interface-icon"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="interface-item">
+                                    <div class="interface-header">
+                                        <div class="interface-title">Page de Connexion</div>
+                                    </div>
+                                    <div class="interface-preview">
+                                        <i class="fas fa-sign-in-alt interface-icon"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="interface-item">
+                                    <div class="interface-header">
+                                        <div class="interface-title">Liste des Projets</div>
+                                    </div>
+                                    <div class="interface-preview">
+                                        <i class="fas fa-list interface-icon"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="interface-item">
+                                    <div class="interface-header">
+                                        <div class="interface-title">Dashboard Admin</div>
+                                    </div>
+                                    <div class="interface-preview">
+                                        <i class="fas fa-tachometer-alt interface-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation initiale
+            gsap.to("#palette-card", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                delay: 0.2
+            });
+            
+            gsap.to("#logo-card", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                delay: 0.4
+            });
+            
+            gsap.to("#interfaces-card", {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                delay: 0.6
+            });
+            
+            // Animation au clic sur espace
+            let spacePressed = false;
+            document.addEventListener('keydown', function(event) {
+                if (event.code === 'Space' && !spacePressed) {
+                    spacePressed = true;
+                    
+                    // Réinitialiser les positions
+                    gsap.set(".card", {
+                        opacity: 0,
+                        y: 20
+                    });
+                    
+                    // Animer chaque élément un par un
+                    gsap.to("#palette-card", {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: "power2.out"
+                    });
+                    
+                    gsap.to("#logo-card", {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: "power2.out",
+                        delay: 0.3
+                    });
+                    
+                    gsap.to("#interfaces-card", {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: "power2.out",
+                        delay: 0.6
+                    });
+                    
+                    // Animer les éléments internes
+                    gsap.fromTo(".color-item", 
+                        { opacity: 0, scale: 0.8 },
+                        { 
+                            opacity: 1, 
+                            scale: 1, 
+                            duration: 0.4, 
+                            stagger: 0.1,
+                            delay: 0.9,
+                            ease: "back.out(1.2)"
+                        }
+                    );
+                    
+                    gsap.fromTo(".logo-display", 
+                        { opacity: 0, scale: 0.8 },
+                        { 
+                            opacity: 1, 
+                            scale: 1, 
+                            duration: 0.6,
+                            delay: 1.5,
+                            ease: "back.out(1.2)"
+                        }
+                    );
+                    
+                    gsap.fromTo(".logo-meaning", 
+                        { opacity: 0, y: 20 },
+                        { 
+                            opacity: 1, 
+                            y: 0, 
+                            duration: 0.5,
+                            delay: 1.8,
+                            ease: "power2.out"
+                        }
+                    );
+                    
+                    gsap.fromTo(".interface-item", 
+                        { opacity: 0, y: 20 },
+                        { 
+                            opacity: 1, 
+                            y: 0, 
+                            duration: 0.4,
+                            stagger: 0.1,
+                            delay: 2.1,
+                            ease: "power2.out"
+                        }
+                    );
+                }
+            });
+        });
+    </script>
+</body>
+</html>

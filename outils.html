@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 4: Réalisation - Outils utilisés</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 70px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .header {
+            margin-bottom: 40px;
+        }
+        .title {
+            color: #004159;
+            font-size: 40px;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            display: inline-block;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #5EDAD1;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            flex-grow: 1;
+        }
+        .tool-card {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 65, 89, 0.08);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        .tool-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .tool-icon .material-icons {
+            font-size: 32px;
+            color: white;
+        }
+        .management .tool-icon {
+            background-color: #5EDAD1;
+        }
+        .design .tool-icon {
+            background-color: #004159;
+        }
+        .technical .tool-icon {
+            background-color: #F5D547;
+        }
+        .languages .tool-icon {
+            background-color: #FF9BC2;
+        }
+        .libraries .tool-icon {
+            background-color: #6665DD;
+        }
+        .databases .tool-icon {
+            background-color: #5EDAD1;
+        }
+        .quality .tool-icon {
+            background-color: #004159;
+        }
+        .tool-name {
+            font-size: 24px;
+            font-weight: 600;
+            color: #004159;
+        }
+        .tool-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tool-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 18px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0, 65, 89, 0.05);
+        }
+        .tool-item .material-icons {
+            font-size: 18px;
+            margin-right: 8px;
+            color: #5EDAD1;
+        }
+        .highlight {
+            color: #6665DD;
+            font-weight: 600;
+        }
+        .tool-bg {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        .management .tool-bg {
+            background-color: #5EDAD1;
+        }
+        .design .tool-bg {
+            background-color: #004159;
+        }
+        .technical .tool-bg {
+            background-color: #F5D547;
+        }
+        .languages .tool-bg {
+            background-color: #FF9BC2;
+        }
+        .libraries .tool-bg {
+            background-color: #6665DD;
+        }
+        .databases .tool-bg {
+            background-color: #5EDAD1;
+        }
+        .quality .tool-bg {
+            background-color: #004159;
+        }
+        .accent-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        .accent-1 {
+            width: 400px;
+            height: 400px;
+            background-color: #5EDAD1;
+            top: -100px;
+            right: -100px;
+        }
+        .accent-2 {
+            width: 300px;
+            height: 300px;
+            background-color: #F5D547;
+            bottom: -50px;
+            left: -50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="accent-shape accent-1"></div>
+        <div class="accent-shape accent-2"></div>
+        
+        <div class="header">
+            <h1 class="title">Chapitre 4: Réalisation - Outils utilisés</h1>
+        </div>
+        
+        <div class="content">
+            <div class="tools-grid">
+                <div class="tool-card management">
+                    <div class="tool-bg"></div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="material-icons">groups</i>
+                        </div>
+                        <div class="tool-name">Gestion & Collaboration</div>
+                    </div>
+                    <div class="tool-list">
+                        <div class="tool-item"><i class="material-icons">code</i><span class="highlight">GitHub</span></div>
+                        <div class="tool-item"><i class="material-icons">chat</i>Microsoft Teams</div>
+                        <div class="tool-item"><i class="material-icons">task_alt</i>JIRA</div>
+                    </div>
+                </div>
+                
+                <div class="tool-card design">
+                    <div class="tool-bg"></div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="material-icons">brush</i>
+                        </div>
+                        <div class="tool-name">Conception & Multimédia</div>
+                    </div>
+                    <div class="tool-list">
+                        <div class="tool-item"><i class="material-icons">palette</i>Adobe Illustrator</div>
+                        <div class="tool-item"><i class="material-icons">design_services</i><span class="highlight">Figma</span></div>
+                        <div class="tool-item"><i class="material-icons">schema</i>Draw.io</div>
+                    </div>
+                </div>
+                
+                <div class="tool-card technical">
+                    <div class="tool-bg"></div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="material-icons">settings</i>
+                        </div>
+                        <div class="tool-name">Outils Techniques</div>
+                    </div>
+                    <div class="tool-list">
+                        <div class="tool-item"><i class="material-icons">inventory_2</i><span class="highlight">Docker</span></div>
+                        <div class="tool-item"><i class="material-icons">security</i>Keycloak</div>
+                    </div>
+                </div>
+                
+                <div class="tool-card languages">
+                    <div class="tool-bg"></div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="material-icons">code</i>
+                        </div>
+                        <div class="tool-name">Langages & Framework</div>
+                    </div>
+                    <div class="tool-list">
+                        <div class="tool-item"><i class="material-icons">javascript</i>JavaScript</div>
+                        <div class="tool-item"><i class="material-icons">coffee</i>Java</div>
+                        <div class="tool-item"><i class="material-icons">functions</i>R</div>
+                        <div class="tool-item"><i class="material-icons">view_quilt</i><span class="highlight">React</span></div>
+                        <div class="tool-item"><i class="material-icons">bolt</i>Vite</div>
+                        <div class="tool-item"><i class="material-icons">style</i>Tailwind CSS</div>
+                        <div class="tool-item"><i class="material-icons">api</i>Spring Boot</div>
+                        <div class="tool-item"><i class="material-icons">plumbing</i>Plumber</div>
+                    </div>
+                </div>
+                
+                <div class="tool-card libraries">
+                    <div class="tool-bg"></div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="material-icons">extension</i>
+                        </div>
+                        <div class="tool-name">Bibliothèques & APIs</div>
+                    </div>
+                    <div class="tool-list">
+                        <div class="tool-item"><i class="material-icons">view_in_ar</i>THREE.js</div>
+                        <div class="tool-item"><i class="material-icons">account_tree</i><span class="highlight">React Flow</span></div>
+                        <div class="tool-item"><i class="material-icons">image</i>Pexels API</div>
+                        <div class="tool-item"><i class="material-icons">psychology</i>MistralAI API</div>
+                    </div>
+                </div>
+                
+                <div class="tool-card databases">
+                    <div class="tool-bg"></div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="material-icons">storage</i>
+                        </div>
+                        <div class="tool-name">Bases de Données</div>
+                    </div>
+                    <div class="tool-list">
+                        <div class="tool-item"><i class="material-icons">table_chart</i><span class="highlight">MySQL</span></div>
+                        <div class="tool-item"><i class="material-icons">dns</i>PostgreSQL</div>
+                        <div class="tool-item"><i class="material-icons">share</i>GraphDB</div>
+                    </div>
+                </div>
+                
+                <div class="tool-card quality">
+                    <div class="tool-bg"></div>
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="material-icons">verified</i>
+                        </div>
+                        <div class="tool-name">Qualité Logicielle</div>
+                    </div>
+                    <div class="tool-list">
+                        <div class="tool-item"><i class="material-icons">speed</i><span class="highlight">Google Lighthouse</span></div>
+                        <div class="tool-item"><i class="material-icons">bug_report</i>SonarQube</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapitre 3: Conception - Conception technique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 70px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .header {
+            margin-bottom: 40px;
+        }
+        .title {
+            color: #004159;
+            font-size: 40px;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            display: inline-block;
+        }
+        .title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #5EDAD1;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            gap: 30px;
+        }
+        .architecture-section {
+            display: flex;
+            gap: 30px;
+            flex-grow: 1;
+        }
+        .left-column, .right-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .card {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 65, 89, 0.08);
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-title {
+            color: #004159;
+            font-size: 22px;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .card-title .material-icons {
+            margin-right: 10px;
+            color: #5EDAD1;
+        }
+        .layers {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+        }
+        .layer {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 2px 6px rgba(0, 65, 89, 0.05);
+        }
+        .layer-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .layer-icon .material-icons {
+            font-size: 22px;
+            color: white;
+        }
+        .presentation .layer-icon {
+            background-color: #5EDAD1;
+        }
+        .business .layer-icon {
+            background-color: #004159;
+        }
+        .security .layer-icon {
+            background-color: #F5D547;
+        }
+        .data .layer-icon {
+            background-color: #FF9BC2;
+        }
+        .layer-content {
+            flex-grow: 1;
+        }
+        .layer-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #004159;
+            margin-bottom: 5px;
+        }
+        .layer-tech {
+            font-size: 16px;
+            color: #666;
+        }
+        .highlight {
+            color: #6665DD;
+            font-weight: 600;
+        }
+        .states-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .state {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0, 65, 89, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .state-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .state-icon .material-icons {
+            font-size: 26px;
+            color: white;
+        }
+        .submitted .state-icon {
+            background-color: #5EDAD1;
+        }
+        .review .state-icon {
+            background-color: #F5D547;
+        }
+        .validated .state-icon {
+            background-color: #6665DD;
+        }
+        .rejected .state-icon {
+            background-color: #FF9BC2;
+        }
+        .archived .state-icon {
+            background-color: #004159;
+        }
+        .state-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #004159;
+            margin-bottom: 5px;
+        }
+        .state-desc {
+            font-size: 14px;
+            color: #666;
+        }
+        .diagrams {
+            display: flex;
+            gap: 20px;
+        }
+        .diagram {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0, 65, 89, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .diagram-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #004159;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .diagram-placeholder {
+            width: 100%;
+            height: 150px;
+            background-color: #f0f0f0;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+        }
+        .accent-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        .accent-1 {
+            width: 400px;
+            height: 400px;
+            background-color: #5EDAD1;
+            top: -100px;
+            right: -100px;
+        }
+        .accent-2 {
+            width: 300px;
+            height: 300px;
+            background-color: #F5D547;
+            bottom: -50px;
+            left: -50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="accent-shape accent-1"></div>
+        <div class="accent-shape accent-2"></div>
+        
+        <div class="header">
+            <h1 class="title">Chapitre 3: Conception - Conception technique</h1>
+        </div>
+        
+        <div class="content">
+            <div class="architecture-section">
+                <div class="left-column">
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="material-icons">architecture</i>
+                            Architecture logique en couches
+                        </h3>
+                        
+                        <div class="layers">
+                            <div class="layer presentation">
+                                <div class="layer-icon">
+                                    <i class="material-icons">desktop_windows</i>
+                                </div>
+                                <div class="layer-content">
+                                    <div class="layer-name">Couche de Présentation</div>
+                                    <div class="layer-tech"><span class="highlight">React</span> - Interface utilisateur</div>
+                                </div>
+                            </div>
+                            
+                            <div class="layer business">
+                                <div class="layer-icon">
+                                    <i class="material-icons">settings_applications</i>
+                                </div>
+                                <div class="layer-content">
+                                    <div class="layer-name">Couche des Services Métier</div>
+                                    <div class="layer-tech"><span class="highlight">Spring Boot</span> - <span class="highlight">R Plumber API</span></div>
+                                </div>
+                            </div>
+                            
+                            <div class="layer security">
+                                <div class="layer-icon">
+                                    <i class="material-icons">security</i>
+                                </div>
+                                <div class="layer-content">
+                                    <div class="layer-name">Couche de Sécurité</div>
+                                    <div class="layer-tech"><span class="highlight">Keycloak</span> - Authentification SSO</div>
+                                </div>
+                            </div>
+                            
+                            <div class="layer data">
+                                <div class="layer-icon">
+                                    <i class="material-icons">storage</i>
+                                </div>
+                                <div class="layer-content">
+                                    <div class="layer-name">Couche de Données</div>
+                                    <div class="layer-tech"><span class="highlight">MySQL</span> - <span class="highlight">GraphDB</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="material-icons">account_tree</i>
+                            États et concepts clés d'un projet
+                        </h3>
+                        
+                        <div class="states-grid">
+                            <div class="state submitted">
+                                <div class="state-icon">
+                                    <i class="material-icons">upload_file</i>
+                                </div>
+                                <div class="state-name">SUBMITTED</div>
+                                <div class="state-desc">État initial après soumission</div>
+                            </div>
+                            
+                            <div class="state review">
+                                <div class="state-icon">
+                                    <i class="material-icons">rate_review</i>
+                                </div>
+                                <div class="state-name">En_Revue</div>
+                                <div class="state-desc">En cours d'examen</div>
+                            </div>
+                            
+                            <div class="state validated">
+                                <div class="state-icon">
+                                    <i class="material-icons">verified</i>
+                                </div>
+                                <div class="state-name">Validé</div>
+                                <div class="state-desc">Approuvé et public</div>
+                            </div>
+                            
+                            <div class="state rejected">
+                                <div class="state-icon">
+                                    <i class="material-icons">cancel</i>
+                                </div>
+                                <div class="state-name">Rejeté</div>
+                                <div class="state-desc">Nécessite des modifications</div>
+                            </div>
+                            
+                            <div class="state archived">
+                                <div class="state-icon">
+                                    <i class="material-icons">archive</i>
+                                </div>
+                                <div class="state-name">Archivé</div>
+                                <div class="state-desc">Projet validé archivé</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="material-icons">dns</i>
+                            Architecture physique
+                        </h3>
+                        
+                        <div class="diagram-placeholder">
+                            <img src="https://sfile.chatglm.cn/images-ppt/6ba9f7652ee8.jpg" alt="Architecture physique" style="max-width: 100%; max-height: 100%; border-radius: 6px;">
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="material-icons">schema</i>
+                            Diagrammes de conception
+                        </h3>
+                        
+                        <div class="diagrams">
+                            <div class="diagram">
+                                <div class="diagram-title">Diagramme de classes global</div>
+                                <div class="diagram-placeholder">
+                                    <i class="material-icons" style="font-size: 48px; color: #666;">class</i>
+                                </div>
+                            </div>
+                            
+                            <div class="diagram">
+                                <div class="diagram-title">Diagramme d'état d'un projet</div>
+                                <div class="diagram-placeholder">
+                                    <i class="material-icons" style="font-size: 48px; color: #666;">timeline</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
